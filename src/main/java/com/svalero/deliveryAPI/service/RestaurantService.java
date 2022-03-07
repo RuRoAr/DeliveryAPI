@@ -12,4 +12,5 @@ List<Restaurant> findAllRestaurants();
 List<Restaurant> findByCategory(String category);
 Restaurant findRestaurant(long id);
 
+
 }
