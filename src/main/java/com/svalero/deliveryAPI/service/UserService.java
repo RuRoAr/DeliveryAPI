@@ -1,5 +1,11 @@
 package com.svalero.deliveryAPI.service;
 
-public interface UserService {
+import com.svalero.deliveryAPI.domain.User;
 
+import java.util.List;
+
+public interface UserService {
+    List<User> findAll();
+    User findById(long id);
+    List<User> findBySurname(String surname);
 }
