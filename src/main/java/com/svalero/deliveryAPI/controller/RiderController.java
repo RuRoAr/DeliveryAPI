@@ -1,6 +1,5 @@
 package com.svalero.deliveryAPI.controller;
 
-import com.svalero.deliveryAPI.domain.Restaurant;
 import com.svalero.deliveryAPI.domain.Rider;
 import com.svalero.deliveryAPI.service.RiderService;
 import org.springframework.beans.factory.annotation.Autowired;

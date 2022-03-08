@@ -29,4 +29,28 @@ public class RestaurantServiceImpl implements RestaurantService{
     public Restaurant findRestaurant(long id) {
         return restaurantRepository.findById(id);
     }
+
+    @Override
+    public Restaurant deleteRestaurant(long id) {
+        Restaurant restaurant= restaurantRepository.findById(id);
+        restaurantRepository.delete(restaurant);
+        return restaurant;
+    }
+
+    @Override
+    public Restaurant addRestaurant(Restaurant restaurant) {
+        return restaurantRepository.save(restaurant);
+    }
+
+    @Override
+    public Restaurant modifyRestaurant(long id, Restaurant newRestaurant) {
+        Restaurant restaurant = restaurantRepository.findById(id);
+        restaurant.setAddress(newRestaurant.getAddress());
+        restaurant.setCapacity(newRestaurant.getCapacity());
+        restaurant.setCategory(newRestaurant.getCategory());
+        restaurant.setName(newRestaurant.getName());
+        restaurant.setOperative(newRestaurant.isOperative());
+        restaurant.setMediumPrice(newRestaurant.getMediumPrice());
+        return restaurantRepository.save(restaurant);
+    }
 }

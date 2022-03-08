@@ -2,7 +2,6 @@ package com.svalero.deliveryAPI.controller;
 
 
 import com.svalero.deliveryAPI.domain.Order;
-import com.svalero.deliveryAPI.domain.Restaurant;
 import com.svalero.deliveryAPI.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,8 @@ import java.util.List;
 
 @RestController
 public class OrderController {
-@Autowired
+
+    @Autowired
     private OrderService orderService;
 
     @GetMapping("/order/{id}")
@@ -23,8 +23,7 @@ public class OrderController {
         return order;
     }
     @GetMapping("/order")
-    public List<Order> getOrderByDistance(@RequestParam(name = "distance", defaultValue = "")
-                                                            int distace) {//?=
+    public List<Order> getOrderByDistance(@RequestParam(name = "distance", defaultValue = "")int distace) {//?=
         List<Order> orders;
         if (distace != 0) {
             orders = orderService.findByDistance(distace);
