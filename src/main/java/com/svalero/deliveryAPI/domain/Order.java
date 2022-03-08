@@ -20,7 +20,7 @@ public class Order {
     @Column
     private double weight;
     @Column
-    private double ready;
+    private boolean ready;
     @Column
     private int time;
     @Column

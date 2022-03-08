@@ -2,12 +2,10 @@ package com.svalero.deliveryAPI.controller;
 
 
 import com.svalero.deliveryAPI.domain.Order;
+import com.svalero.deliveryAPI.domain.Restaurant;
 import com.svalero.deliveryAPI.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +29,20 @@ public class OrderController {
             orders = orderService.findAll();
         }
         return orders;
+    }
+    @DeleteMapping("/order/{id}")
+    public Order removeOrder(@PathVariable long id) {
+        Order order = orderService.deleteOrder(id);
+        return order;
+    }
+    @PostMapping("/orders")
+    public Order addOrder(@RequestBody Order order) {//lo combierte a json
+        Order newOrder = orderService.addOrder(order);
+        return newOrder;
+    }
+    @PutMapping("/order/{id}")
+    public Order modifyOrder(@RequestBody Order order, @PathVariable long id) {
+        Order newOrder = orderService.modifyOrder(id, order);
+        return newOrder;
     }
 }

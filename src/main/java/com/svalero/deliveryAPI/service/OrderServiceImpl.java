@@ -27,4 +27,29 @@ public class OrderServiceImpl implements OrderService{
     public List<Order> findByDistance(int distance) {
         return orderRepository.findByDistance(distance);
     }
+
+    @Override
+    public Order deleteOrder(long id) {
+        Order order = orderRepository.findById(id);
+        orderRepository.deleteById(id);
+        return order;
+    }
+
+    @Override
+    public Order addOrder( Order order) {
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order modifyOrder(long id, Order newOrder) {
+        Order order = orderRepository.findById(id);
+        order.setDistance(newOrder.getDistance());
+        order.setPrice(newOrder.getPrice());
+        order.setReady(newOrder.isReady());
+        order.setTime(newOrder.getTime());
+        order.setWeight(newOrder.getWeight());
+        return orderRepository.save(order);
+
+
+    }
 }
