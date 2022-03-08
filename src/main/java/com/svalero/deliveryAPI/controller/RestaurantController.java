@@ -40,7 +40,7 @@ public class RestaurantController {
         Restaurant restaurant = restaurantService.deleteRestaurant(id);
         return restaurant;
     }
-    @PostMapping("/restaurant")
+    @PostMapping("/restaurants")
     public Restaurant addRestaurant(@RequestBody Restaurant restaurant) {//lo combierte a json
         Restaurant newRestaurant = restaurantService.addRestaurant(restaurant);
         return newRestaurant;
