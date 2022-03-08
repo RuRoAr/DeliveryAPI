@@ -15,12 +15,13 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
     @GetMapping("/user/{id}")
     public User getUser(@PathVariable long id){
         User user= userService.findById(id);
         return user;
     }
-    @GetMapping("/restaurant")
+    @GetMapping("/user")
     public List<User> getUserBySurname(@RequestParam(name = "Surname", defaultValue = "")
                                                             String surname) {//?=
         List<User> users;
