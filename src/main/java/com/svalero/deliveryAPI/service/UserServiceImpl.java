@@ -27,4 +27,27 @@ public class UserServiceImpl implements UserService{
     public List<User> findBySurname(String surname) {
         return userRespository.findBySurname(surname);
     }
+
+    @Override
+    public User deleteUser(long id) {
+        User user = userRespository.findById(id);
+        userRespository.delete(user);
+        return user;
+    }
+
+    @Override
+    public User addUser(User user) {
+        return userRespository.save(user);
+    }
+
+    @Override
+    public User modifyUser(long id, User newUser) {
+        User user = userRespository.findById(id);
+        user.setAddress(newUser.getAddress());
+        user.setName(newUser.getName());
+        user.setBirthDate(newUser.getBirthDate());
+        user.setDni(newUser.getDni());
+        user.setSurname(newUser.getSurname());
+        return userRespository.save(user);
+    }
 }

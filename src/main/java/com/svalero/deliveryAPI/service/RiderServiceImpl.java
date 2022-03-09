@@ -27,4 +27,28 @@ public class RiderServiceImpl implements RiderService{
     public List<Rider> findByVehicle(String vehicle) {
         return riderRepository.findByVehicle(vehicle);
     }
+
+    @Override
+    public Rider deleteRider(long id) {
+       Rider rider = riderRepository.findById(id);
+       riderRepository.delete(rider);
+       return rider;
+    }
+
+    @Override
+    public Rider addRider(Rider rider) {
+        return riderRepository.save(rider);
+
+    }
+
+    @Override
+    public Rider modifyRider(long id, Rider newRider) {
+        Rider rider = riderRepository.findById(id);
+        rider.setName(newRider.getName());
+        rider.setDni(newRider.getDni());
+        rider.setSurname(newRider.getSurname());
+        rider.setMaxSpeed(newRider.getMaxSpeed());
+        rider.setVehicle(newRider.getVehicle());
+        return riderRepository.save(rider);
+    }
 }

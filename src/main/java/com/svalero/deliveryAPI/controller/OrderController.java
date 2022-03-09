@@ -15,16 +15,22 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @GetMapping("/orders")
+    public List<Order> getAllRestaurants() {
+        List<Order> orders = orderService.findAll();
+        return orders;
+    }
+
     @GetMapping("/order/{id}")
     public Order getOrder(@PathVariable long id){
         Order order= orderService.findOrder(id);
         return order;
     }
     @GetMapping("/order")
-    public List<Order> getOrderByDistance(@RequestParam(name = "distance", defaultValue = "")int distace) {//?=
+    public List<Order> getOrderByDistance(@RequestParam(name = "distance", defaultValue = "")int distance) {//?=
         List<Order> orders;
-        if (distace != 0) {
-            orders = orderService.findByDistance(distace);
+        if (distance != 0) {
+            orders = orderService.findByDistance(distance);
         } else {
             orders = orderService.findAll();
         }

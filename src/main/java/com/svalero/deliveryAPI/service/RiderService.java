@@ -10,4 +10,9 @@ public interface RiderService {
     Rider findById(long id);
     List<Rider> findByVehicle(String vehicle);
 
+    Rider deleteRider(long id);
+
+    Rider addRider(Rider rider);
+
+    Rider modifyRider(long id, Rider NewRider);
 }

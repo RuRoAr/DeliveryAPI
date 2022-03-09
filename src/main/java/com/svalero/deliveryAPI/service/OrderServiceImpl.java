@@ -13,6 +13,7 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderRepository orderRepository;
 
+
     @Override
     public List<Order> findAll() {
         return orderRepository.findAll();
@@ -49,7 +50,5 @@ public class OrderServiceImpl implements OrderService{
         order.setTime(newOrder.getTime());
         order.setWeight(newOrder.getWeight());
         return orderRepository.save(order);
-
-
     }
 }
