@@ -2,8 +2,12 @@ package com.svalero.deliveryAPI.controller;
 
 
 import com.svalero.deliveryAPI.domain.Restaurant;
+import com.svalero.deliveryAPI.exception.ErrorRespons;
+import com.svalero.deliveryAPI.exception.RestaurantNotFoundException;
 import com.svalero.deliveryAPI.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +24,7 @@ public class RestaurantController {
         return restaurants;
     }
     @GetMapping("/restaurant/{id}")
-    public Restaurant getRestaurant(@PathVariable long id){
+    public Restaurant getRestaurant(@PathVariable long id)throws RestaurantNotFoundException{
         Restaurant restaurant= restaurantService.findRestaurant(id);
         return restaurant;
     }
@@ -36,7 +40,7 @@ public class RestaurantController {
     }
 
     @DeleteMapping("/restaurant/{id}")
-    public Restaurant removeRestaurant(@PathVariable long id) {
+    public Restaurant removeRestaurant(@PathVariable long id)throws RestaurantNotFoundException {
         Restaurant restaurant = restaurantService.deleteRestaurant(id);
         return restaurant;
     }
@@ -46,8 +50,22 @@ public class RestaurantController {
         return newRestaurant;
     }
     @PutMapping("/restaurant/{id}")
-    public Restaurant modifyRestaurant(@RequestBody Restaurant restaurant, @PathVariable long id) {
+    public Restaurant modifyRestaurant(@RequestBody Restaurant restaurant, @PathVariable long id)throws  RestaurantNotFoundException {
         Restaurant newRestaurant = restaurantService.modifyRestaurant(id, restaurant);
         return newRestaurant;
+    }
+
+    @ExceptionHandler(RestaurantNotFoundException.class)
+    public ResponseEntity<ErrorRespons> handleRestaurantNotFoundException(RestaurantNotFoundException rnfe){
+        ErrorRespons errorRespons = new ErrorRespons("404", rnfe.getMessage());
+
+        return new ResponseEntity<>(errorRespons, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorRespons> handleException(Exception exception){
+        ErrorRespons errorRespons = new ErrorRespons("000000", "Internal Server error   ");
+        return new ResponseEntity<>(errorRespons, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     }

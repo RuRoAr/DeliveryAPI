@@ -2,6 +2,8 @@ package com.svalero.deliveryAPI.service;
 
 
 import com.svalero.deliveryAPI.domain.User;
+import com.svalero.deliveryAPI.exception.RiderNotFoundException;
+import com.svalero.deliveryAPI.exception.UserNotFoundException;
 import com.svalero.deliveryAPI.repository.UserRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findById(long id) {
-        return userRespository.findById(id);
+    public User findById(long id)throws UserNotFoundException{
+        return userRespository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException());
     }
 
     @Override
@@ -29,8 +32,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User deleteUser(long id) {
-        User user = userRespository.findById(id);
+    public User deleteUser(long id)throws UserNotFoundException {
+        User user = userRespository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException());
         userRespository.delete(user);
         return user;
     }
@@ -41,8 +45,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User modifyUser(long id, User newUser) {
-        User user = userRespository.findById(id);
+    public User modifyUser(long id, User newUser)throws UserNotFoundException {
+        User user = userRespository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException());
         user.setAddress(newUser.getAddress());
         user.setName(newUser.getName());
         user.setBirthDate(newUser.getBirthDate());

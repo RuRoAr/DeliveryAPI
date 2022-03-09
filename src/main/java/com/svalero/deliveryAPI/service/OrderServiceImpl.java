@@ -1,6 +1,7 @@
 package com.svalero.deliveryAPI.service;
 
 import com.svalero.deliveryAPI.domain.Order;
+import com.svalero.deliveryAPI.exception.OrderNotFoundException;
 import com.svalero.deliveryAPI.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,9 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order findOrder(long id) {
-        return orderRepository.findById(id);
+    public Order findOrder(long id)throws OrderNotFoundException {
+        return orderRepository.findById(id) //si no esta el objeto mandame esta excepcion
+                .orElseThrow(()-> new OrderNotFoundException());
     }
 
     @Override
@@ -30,8 +32,10 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order deleteOrder(long id) {
-        Order order = orderRepository.findById(id);
+    public Order deleteOrder(long id)throws OrderNotFoundException {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(()-> new OrderNotFoundException());
+
         orderRepository.deleteById(id);
         return order;
     }
@@ -42,8 +46,9 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order modifyOrder(long id, Order newOrder) {
-        Order order = orderRepository.findById(id);
+    public Order modifyOrder(long id, Order newOrder)throws OrderNotFoundException {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(()-> new OrderNotFoundException());;
         order.setDistance(newOrder.getDistance());
         order.setPrice(newOrder.getPrice());
         order.setReady(newOrder.isReady());

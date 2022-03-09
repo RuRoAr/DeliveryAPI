@@ -3,8 +3,12 @@ package com.svalero.deliveryAPI.controller;
 
 import com.svalero.deliveryAPI.domain.Order;
 import com.svalero.deliveryAPI.domain.Restaurant;
+import com.svalero.deliveryAPI.exception.ErrorRespons;
+import com.svalero.deliveryAPI.exception.OrderNotFoundException;
 import com.svalero.deliveryAPI.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +26,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/{id}")
-    public Order getOrder(@PathVariable long id){
+    public Order getOrder(@PathVariable long id) throws OrderNotFoundException{
         Order order= orderService.findOrder(id);
         return order;
     }
@@ -37,7 +41,7 @@ public class OrderController {
         return orders;
     }
     @DeleteMapping("/order/{id}")
-    public Order removeOrder(@PathVariable long id) {
+    public Order removeOrder(@PathVariable long id) throws OrderNotFoundException {
         Order order = orderService.deleteOrder(id);
         return order;
     }
@@ -47,8 +51,20 @@ public class OrderController {
         return newOrder;
     }
     @PutMapping("/order/{id}")
-    public Order modifyOrder(@RequestBody Order order, @PathVariable long id) {
+    public Order modifyOrder(@RequestBody Order order, @PathVariable long id)throws OrderNotFoundException {
         Order newOrder = orderService.modifyOrder(id, order);
         return newOrder;
+    }
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<ErrorRespons> handleOrderNotFoundException(OrderNotFoundException ornfe){
+        ErrorRespons errorRespons = new ErrorRespons("404", ornfe.getMessage());
+        return new ResponseEntity<>(errorRespons, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorRespons> handleException(Exception exception){
+        ErrorRespons errorRespons = new ErrorRespons("000000", "Internal Server error   ");
+        return new ResponseEntity<>(errorRespons, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

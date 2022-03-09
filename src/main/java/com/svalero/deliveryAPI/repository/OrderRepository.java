@@ -11,6 +11,5 @@ import java.util.List;
 public interface OrderRepository extends CrudRepository<Order, Long> {
 
     List<Order> findAll();
-    Order findById(long id);
     List<Order> findByDistance(int distance);
 }

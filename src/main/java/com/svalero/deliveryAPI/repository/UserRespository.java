@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 public interface UserRespository extends CrudRepository<User, Long> {
     List<User> findAll();
-    User findById(long id);
     List<User> findBySurname(String surname);
 }
