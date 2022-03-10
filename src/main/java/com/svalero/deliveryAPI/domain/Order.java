@@ -1,6 +1,7 @@
 package com.svalero.deliveryAPI.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,17 @@ public class Order {
     @Column
     private int distance;
 
+    @ManyToOne
+    @JoinColumn(name = "rider_id")
+    @JsonBackReference(value = "rider-order")//esto tambien hace que no
+    // haga un bucle y por eso no devuleve en postman
+    private Rider rider;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    @JsonBackReference(value = "restaurant-order")
+    private Restaurant restaurant;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference(value = "user-order")
+    private User user;
 }

@@ -1,12 +1,14 @@
 package com.svalero.deliveryAPI.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -28,4 +30,7 @@ public class Rider {
     @Column
     private int maxSpeed;
 
+    @OneToMany(mappedBy = "rider")
+    @JsonBackReference(value = "rider-order")
+    private List<Order> orders;
 }

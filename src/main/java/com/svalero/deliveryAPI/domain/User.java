@@ -1,6 +1,7 @@
 package com.svalero.deliveryAPI.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -29,5 +31,10 @@ public class User {
     private LocalDate birthDate;
     @Column
     private String address;
+
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference(value = "user-order")
+    private List<Order> orders;
 
 }

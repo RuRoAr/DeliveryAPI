@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findById(long id)throws UserNotFoundException{
         return userRespository.findById(id)
-                .orElseThrow(()-> new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User deleteUser(long id)throws UserNotFoundException {
         User user = userRespository.findById(id)
-                .orElseThrow(()-> new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
         userRespository.delete(user);
         return user;
     }
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User modifyUser(long id, User newUser)throws UserNotFoundException {
         User user = userRespository.findById(id)
-                .orElseThrow(()-> new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
         user.setAddress(newUser.getAddress());
         user.setName(newUser.getName());
         user.setBirthDate(newUser.getBirthDate());
