@@ -3,8 +3,8 @@ package com.svalero.deliveryAPI.controller;
 
 import com.svalero.deliveryAPI.domain.Order;
 import com.svalero.deliveryAPI.domain.Restaurant;
-import com.svalero.deliveryAPI.exception.ErrorRespons;
-import com.svalero.deliveryAPI.exception.OrderNotFoundException;
+import com.svalero.deliveryAPI.domain.dto.OrderDto;
+import com.svalero.deliveryAPI.exception.*;
 import com.svalero.deliveryAPI.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,11 +45,19 @@ public class OrderController {
         Order order = orderService.deleteOrder(id);
         return order;
     }
+//    @PostMapping("/orders")
+//    public Order addOrder(@RequestBody Order order) {//lo combierte a json
+//        Order newOrder = orderService.addOrder(order);
+//        return newOrder;
+//    }
     @PostMapping("/orders")
-    public Order addOrder(@RequestBody Order order) {//lo combierte a json
-        Order newOrder = orderService.addOrder(order);
-        return newOrder;
+    public Order addOrder(@RequestBody OrderDto orderDto)throws UserNotFoundException,
+            RestaurantNotFoundException, RiderNotFoundException {//lo combierte a json
+//        Order newOrder = orderService.addOrder(orderDto);
+//        return newOrder;
+        return orderService.addOrder(orderDto);
     }
+
     @PutMapping("/order/{id}")
     public Order modifyOrder(@RequestBody Order order, @PathVariable long id)throws OrderNotFoundException {
         Order newOrder = orderService.modifyOrder(id, order);

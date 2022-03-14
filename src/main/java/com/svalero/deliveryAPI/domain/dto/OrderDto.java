@@ -15,7 +15,7 @@ public class OrderDto {
     private boolean ready;
     private int time;
     private int distance;
-    private long restaurant;
+    private long restaurant;// no poner restaurantId, se lia
     private long user;
     private long rider;
 

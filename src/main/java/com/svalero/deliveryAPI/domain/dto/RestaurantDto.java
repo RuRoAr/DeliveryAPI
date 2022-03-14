@@ -1,6 +1,6 @@
 package com.svalero.deliveryAPI.domain.dto;
 
-import com.svalero.restaurantapi.domain.Order;
+import com.svalero.deliveryAPI.domain.Order;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
