@@ -10,7 +10,6 @@ import java.util.List;
 public interface RiderRepository extends CrudRepository<Rider,Long> {
 
     List<Rider> findAll();
-    Rider findById(long id);
     List<Rider> findByVehicle(String vehicle);
 
     }

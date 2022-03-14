@@ -2,6 +2,8 @@ package com.svalero.deliveryAPI.service;
 
 
 import com.svalero.deliveryAPI.domain.Restaurant;
+import com.svalero.deliveryAPI.exception.OrderNotFoundException;
+import com.svalero.deliveryAPI.exception.RestaurantNotFoundException;
 import com.svalero.deliveryAPI.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +28,15 @@ public class RestaurantServiceImpl implements RestaurantService{
     }
 
     @Override
-    public Restaurant findRestaurant(long id) {
-        return restaurantRepository.findById(id);
+    public Restaurant findRestaurant(long id)throws RestaurantNotFoundException {
+        return restaurantRepository.findById(id)
+                .orElseThrow(()-> new RestaurantNotFoundException());
     }
 
     @Override
-    public Restaurant deleteRestaurant(long id) {
-        Restaurant restaurant= restaurantRepository.findById(id);
+    public Restaurant deleteRestaurant(long id)throws RestaurantNotFoundException {
+        Restaurant restaurant= restaurantRepository.findById(id)
+                .orElseThrow(()-> new RestaurantNotFoundException());;
         restaurantRepository.delete(restaurant);
         return restaurant;
     }
@@ -43,8 +47,9 @@ public class RestaurantServiceImpl implements RestaurantService{
     }
 
     @Override
-    public Restaurant modifyRestaurant(long id, Restaurant newRestaurant) {
-        Restaurant restaurant = restaurantRepository.findById(id);
+    public Restaurant modifyRestaurant(long id, Restaurant newRestaurant)throws RestaurantNotFoundException {
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(()-> new RestaurantNotFoundException());
         restaurant.setAddress(newRestaurant.getAddress());
         restaurant.setCapacity(newRestaurant.getCapacity());
         restaurant.setCategory(newRestaurant.getCategory());
