@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Order findOrder(long id)throws OrderNotFoundException {
         return orderRepository.findById(id) //si no esta el objeto mandame esta excepcion
-                .orElseThrow(()-> new OrderNotFoundException());
+                .orElseThrow(OrderNotFoundException::new);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Order deleteOrder(long id)throws OrderNotFoundException {
         Order order = orderRepository.findById(id)
-                .orElseThrow(()-> new OrderNotFoundException());
+                .orElseThrow(OrderNotFoundException::new);
 
         orderRepository.deleteById(id);
         return order;
@@ -97,4 +97,16 @@ public class OrderServiceImpl implements OrderService{
         order.setWeight(newOrder.getWeight());
         return orderRepository.save(order);
     }
+
+    @Override
+    public List<Order> findOrders(Rider rider, int distance) {
+        return orderRepository.findByRiderAndDistance(rider,distance);
+    }
+
+    @Override
+    public List<Order> findOrders(Rider rider) {
+        return orderRepository.findByRider(rider);
+    }
+
+
 }

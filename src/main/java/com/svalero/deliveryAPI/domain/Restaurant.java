@@ -33,7 +33,6 @@ public class Restaurant {
     private String category;
 
     @OneToMany(mappedBy = "restaurant")
-    @JsonBackReference(value = "restaurant-order")
     private List<Order> orders;
 
 }

@@ -1,13 +1,9 @@
 package com.svalero.deliveryAPI.repository;
 
 import com.svalero.deliveryAPI.domain.Order;
-import com.svalero.deliveryAPI.domain.dto.OrderDto;
-import com.svalero.deliveryAPI.exception.RestaurantNotFoundException;
-import com.svalero.deliveryAPI.exception.RiderNotFoundException;
-import com.svalero.deliveryAPI.exception.UserNotFoundException;
+import com.svalero.deliveryAPI.domain.Rider;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -15,7 +11,8 @@ import java.util.List;
 public interface OrderRepository extends CrudRepository<Order, Long> {
 
 
-
+    List<Order> findByRider(Rider rider);
+    List<Order> findByRiderAndDistance(Rider rider, int distance);
     List<Order> findAll();
     List<Order> findByDistance(int distance);
 }

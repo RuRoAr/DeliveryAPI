@@ -5,6 +5,7 @@ import com.svalero.deliveryAPI.domain.Restaurant;
 import com.svalero.deliveryAPI.domain.Rider;
 import com.svalero.deliveryAPI.exception.ErrorRespons;
 import com.svalero.deliveryAPI.exception.RiderNotFoundException;
+import com.svalero.deliveryAPI.service.OrderService;
 import com.svalero.deliveryAPI.service.RiderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,8 @@ public class RiderController {
     private final Logger logger = LoggerFactory.getLogger(RiderController.class);
     @Autowired
     private RiderService riderService;
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/riders")
     public List<Rider> getAllRiders() {
@@ -68,6 +71,32 @@ public class RiderController {
         Rider newRider = riderService.modifyRider(id, rider);
         logger.info("End Modify rider id:" + id );
         return newRider;
+    }
+    @GetMapping("/rider/{riderId}/orders")//ordenes de un rider
+    public List<Order> getOrders(@PathVariable long riderId,
+                                 @RequestParam(name = "distance", defaultValue = "0")
+                                         int distance) throws RiderNotFoundException {
+        List<Order> orderList = null;
+        logger.info("Find rider by id: " + riderId );
+        Rider rider = riderService.findRider(riderId);
+
+        if (distance != 0) {
+            logger.info("Find rider by id2: " + riderId );
+            orderList = orderService.findOrders(rider, distance);
+        } else {
+            logger.info("Find rider by id3: " + riderId );
+            orderList = orderService.findOrders(rider);
+            logger.info("Find rider by id4: " + riderId );
+        }
+        logger.info("End Find rider by id: " + riderId );
+        return orderList;
+    }
+    @PatchMapping("/rider/{id}")//cambiar el nombre de un rider
+    public Rider patchRider(@PathVariable long id, @RequestBody String name) throws RiderNotFoundException {
+        logger.info("Start PatchRider " + id);
+        Rider rider = riderService.patchRider(id, name);
+        logger.info("End patchRider " + id);
+        return rider;
     }
     @ExceptionHandler(RiderNotFoundException.class)
     public ResponseEntity<ErrorRespons> handleRiderNotFoundException(RiderNotFoundException rinfe){

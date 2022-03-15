@@ -1,9 +1,11 @@
 package com.svalero.deliveryAPI.controller;
 
 
+import com.svalero.deliveryAPI.domain.Order;
 import com.svalero.deliveryAPI.domain.Restaurant;
 import com.svalero.deliveryAPI.exception.ErrorRespons;
 import com.svalero.deliveryAPI.exception.RestaurantNotFoundException;
+import com.svalero.deliveryAPI.service.OrderService;
 import com.svalero.deliveryAPI.service.RestaurantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +22,8 @@ public class RestaurantController {
     private final Logger logger = LoggerFactory.getLogger(RestaurantController.class);
     @Autowired
     private RestaurantService restaurantService;
-
+    @Autowired
+    private OrderService orderService;
     @GetMapping("/restaurants")
     public List<Restaurant> getAllRestaurants(){
         logger.info("Start getRestaurant");
@@ -69,6 +72,7 @@ public class RestaurantController {
         logger.info("End Modify Restaurant: " + id );
         return newRestaurant;
     }
+
 
     @ExceptionHandler(RestaurantNotFoundException.class)
     public ResponseEntity<ErrorRespons> handleRestaurantNotFoundException(RestaurantNotFoundException rnfe){
