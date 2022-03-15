@@ -3,8 +3,10 @@ package com.svalero.deliveryAPI.controller;
 
 import com.svalero.deliveryAPI.domain.Order;
 import com.svalero.deliveryAPI.domain.Restaurant;
+import com.svalero.deliveryAPI.domain.Rider;
 import com.svalero.deliveryAPI.domain.User;
 import com.svalero.deliveryAPI.exception.ErrorRespons;
+import com.svalero.deliveryAPI.exception.RiderNotFoundException;
 import com.svalero.deliveryAPI.exception.UserNotFoundException;
 import com.svalero.deliveryAPI.service.UserService;
 import org.slf4j.Logger;
@@ -69,6 +71,13 @@ public class UserController {
         User newUser = userService.modifyUser(id, user);
         logger.info("End Modify Users by id:" + id );
         return newUser;
+    }
+    @PatchMapping("/user/{id}")//cambiar el nombre de un rider
+    public User patchUser(@PathVariable long id, @RequestBody String address) throws UserNotFoundException {
+        logger.info("Start PatchUser " + id);
+        User user = userService.patchUser(id, address);
+        logger.info("End patchUser " + id);
+        return user;
     }
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorRespons> handleUserNotFoundException(UserNotFoundException unfe){

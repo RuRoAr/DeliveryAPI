@@ -3,6 +3,7 @@ package com.svalero.deliveryAPI.controller;
 
 import com.svalero.deliveryAPI.domain.Order;
 import com.svalero.deliveryAPI.domain.Restaurant;
+import com.svalero.deliveryAPI.domain.Rider;
 import com.svalero.deliveryAPI.domain.dto.OrderDto;
 import com.svalero.deliveryAPI.exception.*;
 import com.svalero.deliveryAPI.service.OrderService;
@@ -77,6 +78,13 @@ public class OrderController {
         Order newOrder = orderService.modifyOrder(id, order);
         logger.info("End Modify Order: " + id );
         return newOrder;
+    }
+    @PatchMapping("/order/{id}")//cambiar el nombre de un rider
+    public Order patchOrder(@PathVariable long id, @RequestBody boolean ready) throws OrderNotFoundException {
+        logger.info("Start PatchOrder " + id);
+        Order order = orderService.patchOrder(id, ready);
+        logger.info("End patchRider " + id);
+        return order;
     }
     @ExceptionHandler(OrderNotFoundException.class)
     public ResponseEntity<ErrorRespons> handleOrderNotFoundException(OrderNotFoundException ornfe){

@@ -1,7 +1,9 @@
 package com.svalero.deliveryAPI.service;
 
 
+import com.svalero.deliveryAPI.domain.Restaurant;
 import com.svalero.deliveryAPI.domain.User;
+import com.svalero.deliveryAPI.exception.RestaurantNotFoundException;
 import com.svalero.deliveryAPI.exception.RiderNotFoundException;
 import com.svalero.deliveryAPI.exception.UserNotFoundException;
 import com.svalero.deliveryAPI.repository.UserRespository;
@@ -53,6 +55,14 @@ public class UserServiceImpl implements UserService{
         user.setBirthDate(newUser.getBirthDate());
         user.setDni(newUser.getDni());
         user.setSurname(newUser.getSurname());
+        return userRespository.save(user);
+    }
+
+    @Override
+    public User patchUser(long id, String address)throws UserNotFoundException {
+        User user = userRespository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+        user.setAddress(address);
         return userRespository.save(user);
     }
 }

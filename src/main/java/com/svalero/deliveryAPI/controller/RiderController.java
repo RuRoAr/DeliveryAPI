@@ -105,7 +105,6 @@ public class RiderController {
         return new ResponseEntity<>(errorRespons, HttpStatus.NOT_FOUND);
     }
 
-    //TODO mas tipos de excepcions
     @ExceptionHandler
     public ResponseEntity<ErrorRespons> handleException(Exception exception){
         ErrorRespons errorRespons = new ErrorRespons("000000", "Internal Server error   ");

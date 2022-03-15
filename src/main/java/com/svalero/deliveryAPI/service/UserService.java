@@ -15,4 +15,6 @@ public interface UserService {
     User addUser(User user);
 
     User modifyUser(long id, User newUser) throws UserNotFoundException;
+
+    User patchUser(long id, String address) throws UserNotFoundException;
 }
