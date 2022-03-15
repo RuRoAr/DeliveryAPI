@@ -23,7 +23,13 @@ public class RiderServiceImpl implements RiderService{
     @Override
     public Rider findById(long id)throws RiderNotFoundException {
         return riderRepository.findById(id)
-                .orElseThrow(()-> new RiderNotFoundException());
+                .orElseThrow(RiderNotFoundException::new);
+    }
+
+    @Override
+    public Rider findRider(long id) throws RiderNotFoundException {
+        return riderRepository.findById(id)
+                .orElseThrow(RiderNotFoundException::new);
     }
 
     @Override
@@ -34,7 +40,7 @@ public class RiderServiceImpl implements RiderService{
     @Override
     public Rider deleteRider(long id)throws RiderNotFoundException {
        Rider rider = riderRepository.findById(id)
-               .orElseThrow(()-> new RiderNotFoundException());;
+               .orElseThrow(RiderNotFoundException::new);;
        riderRepository.delete(rider);
        return rider;
     }
@@ -54,6 +60,14 @@ public class RiderServiceImpl implements RiderService{
         rider.setSurname(newRider.getSurname());
         rider.setMaxSpeed(newRider.getMaxSpeed());
         rider.setVehicle(newRider.getVehicle());
+        return riderRepository.save(rider);
+    }
+
+    @Override
+    public Rider patchRider(long id, String name) throws RiderNotFoundException {
+        Rider rider = riderRepository.findById(id)
+                .orElseThrow(RiderNotFoundException::new);
+        rider.setName(name);
         return riderRepository.save(rider);
     }
 }

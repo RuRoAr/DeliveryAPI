@@ -31,6 +31,5 @@ public class Rider {
     private int maxSpeed;
 
     @OneToMany(mappedBy = "rider")
-    @JsonBackReference(value = "rider-order")
     private List<Order> orders;
 }

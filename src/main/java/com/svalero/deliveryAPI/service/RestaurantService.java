@@ -16,4 +16,5 @@ Restaurant deleteRestaurant(long id) throws RestaurantNotFoundException;
 Restaurant addRestaurant(Restaurant restaurant);
 Restaurant modifyRestaurant(long id, Restaurant restaurant) throws RestaurantNotFoundException;
 
+    Restaurant patchRestaurant(long id, boolean operative) throws RestaurantNotFoundException;
 }

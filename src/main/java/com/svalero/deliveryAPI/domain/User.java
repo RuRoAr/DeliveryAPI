@@ -34,7 +34,6 @@ public class User {
 
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference(value = "user-order")
     private List<Order> orders;
 
 }

@@ -1,6 +1,7 @@
 package com.svalero.deliveryAPI.service;
 
 
+import com.svalero.deliveryAPI.domain.Order;
 import com.svalero.deliveryAPI.domain.Restaurant;
 import com.svalero.deliveryAPI.exception.OrderNotFoundException;
 import com.svalero.deliveryAPI.exception.RestaurantNotFoundException;
@@ -56,6 +57,14 @@ public class RestaurantServiceImpl implements RestaurantService{
         restaurant.setName(newRestaurant.getName());
         restaurant.setOperative(newRestaurant.isOperative());
         restaurant.setMediumPrice(newRestaurant.getMediumPrice());
+        return restaurantRepository.save(restaurant);
+    }
+
+    @Override
+    public Restaurant patchRestaurant(long id, boolean operative)throws RestaurantNotFoundException {
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(RestaurantNotFoundException::new);
+        restaurant.setOperative(operative);
         return restaurantRepository.save(restaurant);
     }
 }
