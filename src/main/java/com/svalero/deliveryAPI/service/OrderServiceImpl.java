@@ -116,5 +116,12 @@ public class OrderServiceImpl implements OrderService{
         return orderRepository.save(order);
     }
 
+    @Override
+    public int numOrders(long idRider)throws  RiderNotFoundException {
+        Order order = orderRepository.findById(idRider)
+                .orElseThrow(RiderNotFoundException::new);
+        return orderRepository.numOrder(idRider);
+    }
+
 
 }

@@ -4,6 +4,7 @@ import com.svalero.deliveryAPI.domain.Order;
 import com.svalero.deliveryAPI.domain.Restaurant;
 import com.svalero.deliveryAPI.domain.Rider;
 import com.svalero.deliveryAPI.exception.ErrorRespons;
+import com.svalero.deliveryAPI.exception.OrderNotFoundException;
 import com.svalero.deliveryAPI.exception.RiderNotFoundException;
 import com.svalero.deliveryAPI.service.OrderService;
 import com.svalero.deliveryAPI.service.RiderService;
@@ -97,6 +98,14 @@ public class RiderController {
         Rider rider = riderService.patchRider(id, name);
         logger.info("End patchRider " + id);
         return rider;
+    }
+    // Contar las orders de un usuario
+    @GetMapping("/user/{id}/numOrders")
+    public int numOrdersRider(@PathVariable long idRider) throws OrderNotFoundException, RiderNotFoundException, OrderNotFoundException {
+        logger.info("Start numOrdersRider " + idRider);
+        int users = orderService.numOrders(idRider);
+        logger.info("End numOrdersRider " + idRider);
+        return users;
     }
     @ExceptionHandler(RiderNotFoundException.class)
     public ResponseEntity<ErrorRespons> handleRiderNotFoundException(RiderNotFoundException rinfe){

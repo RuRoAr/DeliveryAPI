@@ -31,4 +31,6 @@ public interface OrderService {
     List<Order> findOrders(Rider rider);
 
     Order patchOrder(long id, boolean ready) throws OrderNotFoundException;
+
+    int numOrders(long idRider) throws OrderNotFoundException, RiderNotFoundException;
 }
